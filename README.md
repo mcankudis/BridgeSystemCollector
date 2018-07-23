@@ -12,3 +12,5 @@ this will do the installation process for You. To run the app, just enter:
 node server.js
 
 The app will then run on port 3000.
+
+As for now, the app is only available in polish language.

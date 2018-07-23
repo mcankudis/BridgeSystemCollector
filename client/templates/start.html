@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col s0 m1"></div>
+  <div class="col s12 m10">
+    <div class="row">
+      <h4 class="col s12 center-align">
+        Witaj {{user}}
+      </h4>
+      <div class="col s12 center-align padding5">
+        <div class="switch">
+          <label ng-class="{'white-text': theme}">
+            Jasny motyw
+            <input type="checkbox" ng-checked="theme" ng-click="toggleTheme()">
+            <span class="lever"></span>
+            Ciemny motyw
+          </label>
+        </div>
+      </div>
+      <div class="col s12 center-align padding5">
+        <div class="row">
+          <div class="col s0 m4"></div>
+          <div class="col s12 m4 padding5 rounded" ng-class="{'grey': theme, 'lighten-2': theme}">
+            <h5 class="black-text">Zmiana hasła:</h5>
+            <div class="input-field">
+              <input id="passwordOld" type="password" class="validate" ng-model="passwordOld">
+              <label for="passwordOld">Stare hasło</label>
+            </div>
+            <div class="input-field">
+              <input id="passwordNew" type="password" class="validate" ng-model="passwordNew">
+              <label for="passwordNew">Nowe hasło</label>
+            </div>
+            <button class="btn light-green waves-effect waves-light" ng-click="changePasswd()">Zapisz</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

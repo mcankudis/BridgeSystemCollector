@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col s0 m1"></div>
+  <div class="col s12 m10">
+    <div class="row">
+      <h3 class="center-align">Zarejestruj się</h3>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col s0 m1"></div>
+    <form class="col s12 m10" ng-submit="register()">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="name" type="text" class="validate" ng-model="name">
+          <label for="name">Imię i nazwisko</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="login" type="text" class="validate" ng-model="login">
+          <label for="login">Login</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email" class="validate" ng-model="email">
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="password" type="password" class="validate" ng-model="password">
+          <label for="password">Hasło</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="password2" type="password" class="validate" ng-model="password2">
+          <label for="password2">Powtórz hasło</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="cezar" type="text" class="" ng-model="cezar">
+          <label for="cezar">Link do Cezara</label>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn light-green waves-effect waves-light" type="submit">Zarejestruj</button>
+      </div>
+    </form>
+  </div>

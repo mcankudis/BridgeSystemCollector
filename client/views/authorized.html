@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Bridge System Collector</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <!-- <script src="../materialize.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
+    <!-- <script src="../angular-ui-router.js"></script> -->
+    <script src="../app-auth.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!-- <link rel="stylesheet" href="../materialize.css"> -->
+    <link rel="stylesheet" href="../style-auth.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+  <body ng-app="BridgeSystemOnline" ng-controller="AppCtrl" ng-class="{'grey': theme}">
+
+    <header>
+      <nav>
+        <div class="nav-wrapper light-green row">
+          <div class="col s1 hide-on-small-only"></div>
+          <ul class="left hide-on-med-and-up">
+            <li>
+              <a data-activates="mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+            </li>
+          </ul>
+          <ul class="left">
+            <li><a class='dropdown-button' data-activates='dropdown-teams'>
+              <span ng-hide="chosenGroup">Twoje grupy:</span>
+              <span ng-show="chosenGroup">Grupa {{chosenGroupName}}</span>
+            </a></li>
+
+            <ul id='dropdown-teams' class='dropdown-content'>
+              <li ng-repeat="group in groups"><a class="light-green-text" ng-click="chooseGroup(group)">{{group.name}}</a></li>
+              <li class="divider"></li>
+              <li><a href="#/groups" class="light-green-text"><i class="material-icons left">group</i> Zarządzaj Grupami</a></li>
+            </ul>
+
+          </ul>
+          <div class="col s1 right"></div>
+          <ul class="right">
+            <li><a class='dropdown-button' data-activates='dropdown-user'><i class="material-icons large">account_circle</i></a></li>
+
+            <ul id='dropdown-user' class='dropdown-content'>
+              <li><a ng-click="openCezar(user.cezar)" class="light-green-text bold">{{user.username}}</a></li>
+              <li class="divider"></li>
+              <li><a class="light-green-text" ng-click="logOut()"><i class="material-icons left">power_settings_new</i>Wyloguj się</a></li>
+              <li><a href="#/start" class="light-green-text"><i class="material-icons left">settings</i>Ustawienia</a></li>
+            </ul>
+          </ul>
+          <ul class="right hide-on-small-only">
+            <li><a href="#/system">Przegląd Systemu</a></li>
+            <li><a href="#/bidding">Dodaj Odzywkę</a></li>
+          </ul>
+          <ul class="side-nav" id="mobile">
+            <li><a href="#/system">Przegląd Systemu</a></li>
+            <li><a href="#/bidding">Dodaj Odzywkę</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div ng-class="{'white-text': theme}">
+        <ui-view></ui-view>
+      </div>
+    </main>
+
+    <footer class="page-footer light-green">
+      <div class="container">
+        <div class="row ft">
+          <div class="col l6 s12">
+            <div class="grey-text text-lighten-4">Masz pomysł jak ulepszyć tą aplikację? Zauważyłeś błąd? Skontaktuj się ze mną: mikolaj@cankudis.net</div>
+          </div>
+          <div class="col l4 offset-l2 s12">
+            <ul>
+              <li><a class="grey-text text-lighten-4 right" href="http://mikolaj.cankudis.net">Stworzone przez: Mikołaj Cankudis</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+        © 2018 Mikołaj Cankudis
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>

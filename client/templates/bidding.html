@@ -1,0 +1,185 @@
+<div class="row" ng-show="chosenGroup">
+  <div class="col s1"></div>
+  <div class="col s10">
+    <div class="row padding5">
+      <div class="col s12">
+        <div class="row">
+          <div class="col s12 m6 l4"> <!--parting auction fields from description field-->
+            <div class="row"> <!--beggining of auction-->
+              <div class="col s12 black-text">
+
+                <span class="col s3 padding5 w red">W</span>
+                <span class="col s3 padding5 n yellow">N</span>
+                <span class="col s3 padding5 e red">E</span>
+                <span class="col s3 padding5 s yellow">S</span>
+
+                <div class="col s3 padding5 auction-field red lighten-3">
+                  <!-- biddingBox Trigger - static -->
+                  <div ng-click="biddingBox(0, false)">
+                    <span ng-hide="sequence[0]">Wybierz</span>
+                    {{sequence[0].value[0]}}
+                    <span ng-if="sequence[0].value[1]==='a'" class="pass">ass</span>
+                    <span ng-if="sequence[0].value[1]==='x'" class="xx">x</span>
+                    <span ng-if="sequence[0].value[1]==='c'" class="club">&#9827;</span>
+                    <span ng-if="sequence[0].value[1]==='d'" class="diamond">&#9830;</span>
+                    <span ng-if="sequence[0].value[1]==='h'" class="heart">&#9829;</span>
+                    <span ng-if="sequence[0].value[1]==='s'" class="spade">&#9824;</span>
+                    <span ng-if="sequence[0].value[1]==='N'">NT</span>
+                  </div>
+                </div>
+
+                  <!-- biddingBox Trigger - dynamic -->
+                <div class="col s3 padding5 auction-field red lighten-3" ng-class="{'lime': $index%2==0, 'accent-1': $index%2==0}" ng-repeat="z in sequence">
+                  <div ng-click="biddingBox($index+1, false)">
+                    <span ng-hide="sequence[$index+1]">Wybierz</span>
+                    {{sequence[$index+1].value[0]}}
+                    <span ng-if="sequence[$index+1].value[1]==='a'" class="pass">ass</span>
+                    <span ng-if="sequence[$index+1].value[1]==='x'" class="xx">x</span>
+                    <span ng-if="sequence[$index+1].value[1]==='c'" class="club">&#9827;</span>
+                    <span ng-if="sequence[$index+1].value[1]==='d'" class="diamond">&#9830;</span>
+                    <span ng-if="sequence[$index+1].value[1]==='h'" class="heart">&#9829;</span>
+                    <span ng-if="sequence[$index+1].value[1]==='s'" class="spade">&#9824;</span>
+                    <span ng-if="sequence[$index+1].value[1]==='N'">NT</span>
+                  </div>
+                </div>
+
+                <div class="col s12">
+                  <!-- biddingBox Structure -->
+                  <ul class="biddingBox rounded-left-top rounded-right-top light-green lighten-5" ng-show="showBiddingBox">
+                    <li class="bid-functional red rounded-left-top" ng-click="auction.addBid(auction.bids[1])" ng-class="{'disabled': !auction.canDouble}">x</li>
+                    <li class="bid-functional green darken-2" ng-click="auction.addBid(auction.bids[0])">pass</li>
+                    <li class="bid-functional blue darken-3 rounded-right-top" ng-click="auction.addBid(auction.bids[2])" ng-class="{'disabled': !auction.canRedouble}">xx</li>
+                    <li class="bid-inBox light-green lighten-5" ng-repeat="(indexBid, bid) in auction.bids | filter: biddingBoxFilter" ng-click="auction.addBid(bid)">
+                        {{bid.value[0]}}
+                      <span ng-if="bid.value[1]==='c'" class="club">&#9827;</span>
+                      <span ng-if="bid.value[1]==='d'" class="diamond">&#9830;</span>
+                      <span ng-if="bid.value[1]==='h'" class="heart">&#9829;</span>
+                      <span ng-if="bid.value[1]==='s'" class="spade">&#9824;</span>
+                      <span ng-if="bid.value[1]==='N'">NT</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div> <!--end of auction-->
+          </div>  <!--end of parting auction fields from description field-->
+
+          <div class="col s12 m6 l8 right">
+              <div class="row">
+              <div class="col s0 m1"></div>
+              <div class="col s12 m11">
+                <div class="row">
+                  <div class="switch col s12 padding5">
+                    <label ng-class="{'white-text': theme}">
+                      Licytacja Jednostronna
+                      <br class="hide-on-large-only"/>
+                      <input type="checkbox">
+                      <span class="lever green lighten-5" ng-click="toggleTwoSide()"></span>
+                      <br class="hide-on-large-only"/>
+                      Licytacja Dwustronna
+                    </label>
+                    <div class="btn-flat tooltipped" data-position="top" data-delay="50" data-tooltip='Funkcja "Licytacja Jednostronna" automatycznie dodaje pasa po każdej odzywce'><i class="material-icons">lightbulb_outline</i></div>
+                  </div>
+                  <div class="col s12 padding5">
+                    <span>
+                      <input type="checkbox" id="auctionKeeper" ng-click="toggleKeepAuction()" />
+                      <label for="auctionKeeper" ng-class="{'white-text': theme}">Zapamiętaj licytację</label>
+                    </span>
+                    <div class="btn-flat tooltipped" data-position="top" data-delay="50" data-tooltip='Gdy to pole jest zaznaczone sekwencja licytacji nie zniknie po dodaniu odzywki'><i class="material-icons">lightbulb_outline</i></div>
+                  </div>
+                    <br/>
+                    <div class="col s12 padding5"><input type="text" placeholder="Opcjonalne: grupa/konwencja" ng-class="{'darkThemeInput': theme}" ng-model="convention"/></div>
+                    <div class="col s12">
+                      <div class="btn waves-effect waves-light yellow lighten-1 black-text" ng-click="removeLast()"><i class="material-icons left">undo</i>Usuń ostatni</div>
+                      <br class="hide-on-large-only"/>
+                      <div class="btn waves-effect waves-light red lighten-1" ng-click="removeAll()"><i class="material-icons left">clear</i>Wyczyść</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col s12">
+        <div class="row">
+
+          <!-- PASS, X AND XX -->
+          <div class="col s12">
+            <div class="row">
+              <div class="col s2 m1">pass</div>
+              <div class="col s9 m5 l3">
+                <div class="btn btn-floating green" ng-click="insertColor(1, bid.index)">♣</div>
+                <div class="btn btn-floating orange" ng-click="insertColor(2, bid.index)">♦</div>
+                <div class="btn btn-floating red" ng-click="insertColor(3, bid.index)">♥</div>
+                <div class="btn btn-floating blue" ng-click="insertColor(4, bid.index)">♠</div>
+              </div>
+              <div ng-show="bidAlreadyExists(1)">{{bidAlreadyExists(1)}}</div>
+              <input class="col s10 m5 l7" id="{{1}}" type="text" placeholder="Nowe znaczenie" ng-model="description[1].description"/>
+            </div>
+          </div>
+
+          <div class="col s12" ng-show="auction.canDouble">
+            <div class="row">
+              <div class="col s2 m1">x</div>
+              <div class="col s9 m5 l3">
+                <div class="btn btn-floating green" ng-click="insertColor(1, bid.index)">♣</div>
+                <div class="btn btn-floating orange" ng-click="insertColor(2, bid.index)">♦</div>
+                <div class="btn btn-floating red" ng-click="insertColor(3, bid.index)">♥</div>
+                <div class="btn btn-floating blue" ng-click="insertColor(4, bid.index)">♠</div>
+              </div>
+              <div ng-show="bidAlreadyExists(2)">{{bidAlreadyExists(2)}}</div>
+              <input class="col s10 m5 l7" id="{{2}}" type="text" placeholder="Nowe znaczenie" ng-model="description[2].description"/>
+            </div>
+          </div>
+
+          <div class="col s12" ng-show=auction.canRedouble>
+            <div class="row">
+              <div class="col s2 m1">xx</div>
+              <div class="col s9 m5 l3">
+                <div class="btn btn-floating green" ng-click="insertColor(1, bid.index)">♣</div>
+                <div class="btn btn-floating orange" ng-click="insertColor(2, bid.index)">♦</div>
+                <div class="btn btn-floating red" ng-click="insertColor(3, bid.index)">♥</div>
+                <div class="btn btn-floating blue" ng-click="insertColor(4, bid.index)">♠</div>
+              </div>
+              <div ng-show="bidAlreadyExists(3)">{{bidAlreadyExists(3)}}</div>
+              <input class="col s10 m5 l7" id="{{3}}" type="text" placeholder="Nowe znaczenie" ng-model="description[3].description"/>
+            </div>
+          </div>
+          <!-- END OF PASS, X AND XX -->
+
+          <div class="col s12" ng-repeat="bid in auction.bids | filter: bidsFilter">
+            <div class="row">
+              <div class="col s2 m1">
+                {{bid.value[0]}}
+                <span ng-if="bid.value[1]==='c'" class="club">&#9827;</span>
+                <span ng-if="bid.value[1]==='d'" class="diamond">&#9830;</span>
+                <span ng-if="bid.value[1]==='h'" class="heart">&#9829;</span>
+                <span ng-if="bid.value[1]==='s'" class="spade">&#9824;</span>
+                <span ng-if="bid.value[1]==='N'">NT</span></div>
+              <div class="col s9 m5 l3">
+                <div class="btn btn-floating green" ng-click="insertColor(1, bid.index)">♣</div>
+                <div class="btn btn-floating orange" ng-click="insertColor(2, bid.index)">♦</div>
+                <div class="btn btn-floating red" ng-click="insertColor(3, bid.index)">♥</div>
+                <div class="btn btn-floating blue" ng-click="insertColor(4, bid.index)">♠</div>
+              </div>
+              <div ng-show="bidAlreadyExists(bid.index)">{{bidAlreadyExists(bid.index)}}</div>
+              <input class="col s10 m5 l7" id="{{bid.index}}" type="text" placeholder="Nowe znaczenie" ng-model="description[bid.index].description"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="row" ng-hide="chosenGroup">
+    <div class="col m1"></div>
+    <h4 class="col s12 m10 center-align warning black-text">Wybierz grupę aby móc edytować system</h4>
+  </div>
+
+<div class="fixed-action-btn" ng-show="chosenGroup">
+  <a class="btn light-green" ng-click="addBid()">
+    <i class="large material-icons left">add</i> Zapisz
+  </a>
+</div>

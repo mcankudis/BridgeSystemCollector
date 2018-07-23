@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col s0 m1"></div>
+  <div class="col s12 m4">
+    <ul class="collection with-header">
+      <li class="collection-header"><h5>Grupy, których jesteś członkiem:</h5></li>
+      <li class="collection-item center-align"><div class="btn light-green waves-effect waves-light modal-trigger" href="#modalToAddTeam"><i class="material-icons left">add</i>Nowa grupa</div></li>
+      <li class="collection-item" ng-repeat="group in groups"><div>{{group.name}}<a class="secondary-content waves-effect waves-green scale" ng-click="openGroup(group)"><i class="material-icons light-green-text">more_horiz</i></a></div></li>
+    </ul>
+  </div>
+  <div ng-if="openedGroup" class="col s12 m6">
+    <ul class="collection with-header">
+      <li class="collection-header"><h5>Grupa {{openedGroup.name}}</h5><div ng-show="openedGroup.description">{{openedGroup.description}}</div></li>
+      <li class="collection-header"><h5>Członkowie</h5>
+        <span class="row" ng-show="checkIfAdmin(id)">
+          <input class="col s7" type="text" placeholder="Dodaj do grupy" ng-model="userToAdd"/>
+          <span class="col s4">
+            <a class="btn light-green waves-effect waves-light" ng-click="addUserToGroup(userToAdd)"><i class="material-icons left">add</i>dodaj</a>
+          </span>
+        </span>
+      </li>
+      <li class="collection-item" ng-repeat="us in openedGroup.users">
+        <div ng-click="openCezar(us.cezar)">{{us.username}}
+          <div class="secondary-content">
+            <a class="waves-effect waves-green tooltipped" ng-hide="checkIfAdmin(us._id) || !checkIfAdmin(id)" ng-click="addUserToAdmins(us)" data-position="top" data-tooltip="mianuj administratorem grupy"><i class="material-icons light-green-text">supervisor_account</i></a>
+            <a class="waves-effect waves-green" ng-show="!checkIfAdmin(us._id) && (checkIfAdmin(id) || us._id === id)" ng-click="removeUserFromGroup(us)"><i class="material-icons light-green-text">clear</i></a>
+          </div>
+        </div>
+      </li>
+      <li class="collection-header"><h5>Administratorzy</h5></li>
+      <li class="collection-item" ng-repeat="admin in openedGroup.admins">
+        {{admin.username}}
+        <div class="secondary-content">
+          <a class="waves-effect waves-green tooltipped" ng-hide="!checkIfAdmin(id)" ng-click="removeUserFromAdmins(admin)" data-position="top" data-tooltip="usuń z administratorów grupy"><i class="material-icons light-green-text">clear</i></a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div id="modalToAddTeam" class="modal bottom-sheet">
+  <div class="modal-content">
+    <h5 class="col s6">Nowa drużyna</h5>
+    <div class="col s1 right">
+      <div class="modal-action modal-close waves-effect waves-light btn-flat light-green" ng-click="addGroup()">Zapisz</div>
+    </div>
+    <div class="col s12"><input type="text" placeholder="Nazwa" ng-model="newTeamName"/></div>
+    <div class="col s12"><input type="text" placeholder="Opcjonalnie: opis" ng-model="newTeamDescription"/></div>
+  </div>
+</div>
